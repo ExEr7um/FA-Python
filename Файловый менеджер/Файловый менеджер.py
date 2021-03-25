@@ -5,19 +5,6 @@ import json
 settings = {}
 root_path = ""
 
-try:
-    with open("Настройки.json") as settings_file:
-        settings = json.load(settings_file)
-    if settings["rootPath"]:
-        root_path = settings["rootPath"]
-    else:
-        raise FileNotFoundError
-except FileNotFoundError:
-    set_root_path()
-
-
-path = root_path
-
 
 # Проверка существования директории
 def exists(name):
@@ -247,6 +234,18 @@ commands = {
     # 12. Изменить домашнюю директорию
     "12": set_root_path,
 }
+
+try:
+    with open("Настройки.json") as settings_file:
+        settings = json.load(settings_file)
+    if settings["rootPath"]:
+        root_path = settings["rootPath"]
+    else:
+        raise FileNotFoundError
+except FileNotFoundError:
+    set_root_path()
+
+path = root_path
 
 while True:
     print(
