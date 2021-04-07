@@ -19,7 +19,7 @@ def serve_client(client_sock, cid):
     while True:
         request = read_request(client_sock)
         if request is None:
-            print(f'Client #{cid} unexpectedly disconnected')
+            print(f'Клиент #{cid} неожиданно отключился')
             break
         else:
             if 'exit' in request.decode('utf-8'):
@@ -42,7 +42,7 @@ def create_serv_sock(serv_port):
 
 def accept_client_conn(serv_sock, cid):
     client_sock, client_addr = serv_sock.accept()
-    print(f'Client #{cid} connected '
+    print(f'Клиент #{cid} подключен '
           f'{client_addr[0]}:{client_addr[1]}')
     return client_sock
 
@@ -52,19 +52,16 @@ def read_request(client_sock):
     try:
         request = client_sock.recv(1024)
         if not request:
-            # Клиент преждевременно отключился.
             return None
         return request
 
     except ConnectionResetError:
-        # Соединение было неожиданно разорвано.
         return None
     except:
         raise
 
 
 def handle_request(request):
-    # time.sleep(5)
     return request[::-1]
 
 
@@ -74,7 +71,7 @@ def write_response(client_sock, response):
 
 def write_response_close(client_sock, cid):
     client_sock.close()
-    print(f'Client #{cid} has been served')
+    print(f'Клиент #{cid} обслужен')
 
 
 if __name__ == '__main__':
